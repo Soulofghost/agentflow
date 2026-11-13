@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgentFlow — Multi-Agent Orchestration Matrix</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="flow-app">
+        <!-- Top Navigation -->
+        <header class="flow-header">
+            <div class="brand-group">
+                <div class="flow-logo-glyph">AF</div>
+                <div>
+                    <h1 class="flow-title">AgentFlow</h1>
+                    <span class="flow-subtitle">Multi-Agent DAG Orchestrator & State Machine</span>
+                </div>
+            </div>
+            <div class="header-controls">
+                <button id="btn-new-wf-modal" class="btn-outline">+ Custom DAG</button>
+                <div class="runtime-badge">
+                    <span class="status-dot live"></span>
+                    <span>AsyncIO Runner Ready</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- 3-Column Orchestration Workspace -->
+        <div class="workspace-layout">
+            <!-- Left: Workflow Templates & Config -->
+            <aside class="sidebar-workflows">
+                <div class="section-title">
+                    <span>WORKFLOW TEMPLATES</span>
+                    <span id="wf-count" class="badge-count">0</span>
+                </div>
+                <div id="workflow-list" class="workflow-tree">
+                    <!-- Workflow items populated here -->
+                </div>
+
+                <div class="dispatch-box">
+                    <span class="dispatch-title">LAUNCH EXECUTION</span>
+                    <textarea id="task-prompt" rows="3" placeholder="Enter objective for coordinated agent swarm (e.g. 'Review pull request #402 for SQL injection and unsafe eval() calls')..."></textarea>
+                    <button id="btn-dispatch-exec" class="btn-dispatch">Deploy Multi-Agent Run</button>
+                </div>
+            </aside>
+
+            <!-- Center: Interactive DAG Canvas -->
+            <main class="canvas-main">
+                <div class="canvas-toolbar">
+                    <div class="toolbar-info">
+                        <span id="active-wf-name" class="active-wf-title">Loading DAG...</span>
+                        <span id="exec-status-tag" class="exec-badge idle">IDLE</span>
+                    </div>
+                    <div class="dag-legend">
+                        <span class="legend-item"><span class="legend-color role-planner"></span>Planner</span>
+                        <span class="legend-item"><span class="legend-color role-worker"></span>Worker</span>
+                        <span class="legend-item"><span class="legend-color role-critic"></span>Critic</span>
+                    </div>
+                </div>
+
+                <div class="canvas-viewport">
+                    <svg id="dag-svg" class="dag-canvas" width="100%" height="100%"></svg>
+                </div>
+            </main>
+
+            <!-- Right: Agent Logs & Artifact Inspector -->
+            <aside class="sidebar-telemetry">
+                <div class="telemetry-top">
+                    <span>AGENT DIALOGUE & TRACE</span>
+                    <span id="step-counter" class="stats-text">0 Steps Completed</span>
+                </div>
+
+                <div id="agent-log-stream" class="log-stream">
+                    <div class="empty-trace">Deploy a workflow run to monitor real-time agent message passing, tool invocations, and synthesized deliverables.</div>
+                </div>
+
+                <div class="final-artifact-drawer">
+                    <div class="drawer-header">
+                        <span>SYNTHESIZED DELIVERABLE</span>
+                        <button id="btn-copy-artifact" class="btn-subtle">Copy</button>
+                    </div>
+                    <pre id="final-deliverable" class="artifact-box">No output generated yet.</pre>
+                </div>
+            </aside>
+        </div>
+    </div>
+
+    <!-- Custom Workflow Modal -->
+    <div id="custom-wf-modal" class="modal-backdrop">
+        <div class="modal-card">
+            <div class="modal-head">
+                <h3>Define Custom Multi-Agent DAG</h3>
+                <button id="btn-close-wf-modal" class="btn-close">&times;</button>
+            </div>
+            <form id="custom-wf-form" class="modal-form">
+                <div class="field-wrap">
+                    <label>Workflow Name</label>
+                    <input type="text" id="custom-name" required placeholder="e.g. Threat Model & Penetration Spec">
+                </div>
+                <div class="field-wrap">
+                    <label>Description</label>
+                    <input type="text" id="custom-desc" required placeholder="Purpose and scope of this agent swarm">
+                </div>
+                <div class="field-wrap">
+                    <label>DAG Nodes JSON (Topological Definition)</label>
+                    <textarea id="custom-dag-json" rows="8" required class="json-textarea"></textarea>
+                </div>
+                <div class="form-btns">
+                    <button type="button" id="btn-cancel-wf" class="btn-secondary">Cancel</button>
+                    <button type="submit" class="btn-submit">Compile & Save DAG</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
